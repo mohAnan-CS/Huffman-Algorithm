@@ -1,30 +1,39 @@
 package huffman;
 
-import huffman.tree.HuffmanTree;
-import huffman.tree.Node;
-
 import java.io.IOException;
 import java.util.Map;
 
 public class Runner {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        try {
+//        try {
+//
+//            String text = File.readFile("test.txt");
+//            System.out.println(text);
+//            System.out.println("------------");
+//            Map<Character, Integer> characterHashMap = Frequency.calculateFrequency(text);
+//            System.out.println(characterHashMap);
+//            System.out.println("-------------");
+//            System.out.println("Creat huffman tree");
+//            Map<Character, String> table = HuffmanTree.createHuffmanTree(characterHashMap);
+//            printHuffmanTable(table);
+//
+//
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-            String text = File.readFile("test.txt");
-            System.out.println(text);
-            System.out.println("------------");
-            Map<Character, Integer> characterHashMap = Frequency.calculateFrequency(text);
-            System.out.println(characterHashMap);
-            System.out.println("-------------");
-            System.out.println("Creat huffman tree");
-            Node root = HuffmanTree.createHuffmanTree(characterHashMap);
-            System.out.println(root.getFrequency());
+        HuffmanEncode.encode("test.txt" , "output.txt");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+    }
+
+    private static void printHuffmanTable(Map<Character , String> map){
+
+        for (Map.Entry<Character, String> entry : map.entrySet())
+            System.out.println(entry.getKey() + ": " + entry.getValue());
 
     }
 

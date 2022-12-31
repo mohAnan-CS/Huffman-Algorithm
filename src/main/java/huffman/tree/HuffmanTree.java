@@ -1,11 +1,12 @@
 package huffman.tree;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
 public class HuffmanTree {
 
-    public static Node createHuffmanTree(Map<Character, Integer> frequencies){
+    public static Map<Character, String> createHuffmanTree(Map<Character, Integer> frequencies){
 
         PriorityQueue<Node> queue = new PriorityQueue<>();
 
@@ -25,7 +26,24 @@ public class HuffmanTree {
 
         }
 
-        return queue.poll();
+        Node root = queue.poll();
+        Map<Character, String> table = new HashMap<>();
+        buildHuffmanCode(root, "", table);
+
+        return table;
+
+    }
+
+    private static void buildHuffmanCode(Node root, String code, Map<Character, String> table){
+
+        if (root.getLeft() == null && root.getRight() == null){
+            table.put(root.getCharacter(), code);
+        }else{
+
+            buildHuffmanCode(root.getLeft(), code + "0", table);
+            buildHuffmanCode(root.getRight(), code + "1", table);
+
+        }
 
     }
 }
