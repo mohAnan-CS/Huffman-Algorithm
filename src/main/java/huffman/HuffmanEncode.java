@@ -28,6 +28,10 @@ public class HuffmanEncode {
         System.out.println("Creat huffman tree");
         Map<Character, String> table = HuffmanTree.createHuffmanTree(characterHashMap);
 
+        for (Map.Entry<Character, String> entry : table.entrySet()) {
+            System.out.println(entry.getValue());
+        }
+
         // Open the output file
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
             // Open the input file and encode the characters
@@ -56,16 +60,9 @@ public class HuffmanEncode {
             // Handle the exception
         }
 
-         //Sort the frequency table by character in ascending order
-        TreeMap<Character, Integer> sorted_freq_table = new TreeMap(table);
 
-        // Build the header string by concatenating the character and its frequency
-        StringBuilder header = new StringBuilder();
-        for (Map.Entry<Character, Integer> entry : sorted_freq_table.entrySet()) {
-            header.append(entry.getKey()).append(entry.getValue());
-        }
 
-        //System.out.println(header);
+
     }
 
 //    public static String build_header(String text) {
