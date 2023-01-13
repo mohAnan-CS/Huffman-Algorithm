@@ -1,4 +1,4 @@
-package huffman;
+package huffman.tree;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,7 @@ public class Frequency {
         }
 
         return frequencyHashMap;
+
     }
 
 

@@ -1,5 +1,7 @@
 package huffman;
 
+import huffman.encode.HuffmanEncode;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,7 +27,7 @@ public class Runner {
 //            e.printStackTrace();
 //        }
 
-        HuffmanEncode.encode("test.txt" , "output.txt");
+        HuffmanEncode.encode2("test.txt" , "output.txt");
 
 
     }

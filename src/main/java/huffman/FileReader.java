@@ -1,11 +1,9 @@
 package huffman;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 
-public class File {
+public class FileReader {
 
     public static String readFile(String fileName) throws IOException {
 //        // Open the file
@@ -18,7 +16,7 @@ public class File {
 //
 //        return data;
 
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        BufferedReader reader = new BufferedReader(new java.io.FileReader(fileName));
         StringBuilder sb = new StringBuilder();
         String line = reader.readLine();
         while (line != null) {
