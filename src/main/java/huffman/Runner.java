@@ -2,6 +2,7 @@ package huffman;
 
 import huffman.encode.HuffmanEncode;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -27,7 +28,10 @@ public class Runner {
 //            e.printStackTrace();
 //        }
 
-        HuffmanEncode.encode2("test.txt" , "output.txt");
+        HuffmanEncode.encode("test.txt" , "output.txt");
+        File file = new File("output.huff");
+        System.out.println("-----------");
+        System.out.println(file.length());
 
 
     }

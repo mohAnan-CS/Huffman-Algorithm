@@ -1,6 +1,7 @@
 package huffman.encode;
 
 import huffman.FileReader;
+import huffman.header.Header;
 import huffman.tree.Frequency;
 import huffman.tree.HuffmanTree;
 
@@ -11,12 +12,9 @@ import java.util.Map;
 
 public class HuffmanEncode {
 
-    public static String extensionFile ;
-    public static long originalFileSize ;
-    public static int extraBits ;
-    private static Map<Character, String> huffmanTable;
+    public static Map<Character, String> huffmanTable;
 
-    public static void encode2(String inputFile, String outputFile) throws IOException {
+    public static void encode(String inputFile, String outputFile) throws IOException {
 
         String text = FileReader.readFile(inputFile);
         Map<Character, Integer> characterHashMap = Frequency.calculateFrequency(text);
@@ -47,9 +45,13 @@ public class HuffmanEncode {
                 System.out.println("Code before add extra bit : " + code);
                 System.out.println("------------------");
                 String codeAfterExtraBit = addExtraBitZero(code);
-                byte[] byteArray = storeEach8bitInByte(codeAfterExtraBit);
-                System.out.println("Byte array length "+ byteArray.length);
-                writeCodeInEncodedFile(byteArray, "C:\\Users\\twitter\\IdeaProjects\\HuffmanAlgrothim\\output.txt");
+                byte[] codeByteArray = storeEach8bitInByte(codeAfterExtraBit);
+                System.out.println("Byte array length "+ codeByteArray.length);
+                setFileSize(inputFile);
+                setExtensionFile(inputFile);
+                byte[] headerByteArray = Header.createHeader();
+                writeCodeAndHeaderInEncodedFile(headerByteArray, codeByteArray, "C:\\Users\\twitter\\IdeaProjects\\HuffmanAlgrothim\\output.txt");
+                System.out.println("File Size Before : " + Header.originalFileSize);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -63,7 +65,7 @@ public class HuffmanEncode {
 
         if (code.length() % 8 != 0) {
             int zeroBits = 8 - code.length() % 8;
-            extraBits = zeroBits;
+            Header.extraBits = zeroBits;
             for (int i = 0; i < zeroBits; i++)
                 code += "0";
         }
@@ -84,31 +86,39 @@ public class HuffmanEncode {
 
     }
 
-    public static void writeCodeInEncodedFile(byte[] byteCodeArray, String encodedFilePath) throws IOException {
+    public static void writeCodeAndHeaderInEncodedFile(byte[] headerByteArray, byte[] codeByteArray, String encodedFilePath) throws IOException {
 
         String newFilePath = encodedFilePath.substring(0, encodedFilePath.lastIndexOf(".")) + ".huff";
         File file = new File(newFilePath);
-        try (FileOutputStream fos = new FileOutputStream(file)) {
-            fos.write(byteCodeArray);
+
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
+
+            fileOutputStream.write(headerByteArray);
+            fileOutputStream.write(codeByteArray);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        System.out.println("File Size After = " + newFilePath.length());
+
     }
 
-    public static long getFileSize(String path){
+    public static void setFileSize(String path){
 
         File file = new File(path);
-        originalFileSize = file.length();
-        return file.length();
+        Header.originalFileSize = file.length();
 
     }
 
-    public static String setExtensionFile(String path){
+    public static void setExtensionFile(String path){
 
-        String[] split = path.split("\\\\");
-        extensionFile = split[split.length - 1 ];
-        return split[split.length - 1 ];
+        File file = new File(path);
+        String fileName = file.getName();
+        int index = fileName.lastIndexOf(".");
+        String fileExtension = (index == -1) ? "" : fileName.substring(index + 1);
+        Header.fileExtension = fileExtension;
+
     }
 
 

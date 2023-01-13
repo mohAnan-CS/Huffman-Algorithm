@@ -1,1 +1,26 @@
-Mohammad anan abo jazar in birzeit university in fourth year
+Mohammad anan abo jazar in birzeit university in fourth year mohammad ana
+public static byte[] createHeader() {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        if(HuffmanTree.root != null)
+            storeTree(HuffmanTree.root, byteArrayOutputStream);
+        byte[] treeData = byteArrayOutputStream.toByteArray();
+        byte[] extraBitsData = new byte[4];
+        byte[] originalFileSizeData = new byte[8];
+        byte[] fileExtensionData = new byte[0];
+        
+        if(extraBits!= null)
+            extraBitsData = ByteBuffer.allocate(4).putInt(extraBits).array();
+        if(originalFileSize != null)
+            originalFileSizeData = ByteBuffer.allocate(8).putLong(originalFileSize).array();
+        if(fileExtension != null)
+            fileExtensionData = fileExtension.getBytes(StandardCharsets.UTF_8);
+
+        int headerSize = 4 + treeData.length + originalFileSizeData.length + fileExtensionData.length;
+        ByteBuffer buffer = ByteBuffer.allocate(headerSize);
+        buffer.put(extraBitsData);
+        buffer.put(treeData);
+        buffer.put(originalFileSizeData);
+        buffer.put(fileExtensionData);
+
+        return buffer.array();
+    }

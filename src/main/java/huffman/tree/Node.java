@@ -52,6 +52,10 @@ public class Node implements Comparable<Node>{
         this.right = right;
     }
 
+    public boolean isLeaf() {
+        return left == null && right == null;
+    }
+
     @Override
     public String toString() {
         return "Node{" +

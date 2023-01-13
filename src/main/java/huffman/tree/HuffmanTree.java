@@ -6,6 +6,8 @@ import java.util.PriorityQueue;
 
 public class HuffmanTree {
 
+    public static Node root ;
+
     public static Map<Character, String> createHuffmanTree(Map<Character, Integer> frequencies){
 
         PriorityQueue<Node> queue = new PriorityQueue<>();
@@ -26,9 +28,11 @@ public class HuffmanTree {
 
         }
 
-        Node root = queue.poll();
+        Node rootNode = queue.poll();
+        root = rootNode;
         Map<Character, String> table = new HashMap<>();
-        buildHuffmanCode(root, "", table);
+        assert rootNode != null;
+        buildHuffmanCode(rootNode, "", table);
 
         return table;
 
