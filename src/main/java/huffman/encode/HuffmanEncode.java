@@ -49,6 +49,7 @@ public class HuffmanEncode {
                 String codeAfterExtraBit = addExtraBitZero(code);
                 byte[] byteArray = storeEach8bitInByte(codeAfterExtraBit);
                 System.out.println("Byte array length "+ byteArray.length);
+                writeCodeInEncodedFile(byteArray, "C:\\Users\\twitter\\IdeaProjects\\HuffmanAlgrothim\\output.txt");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +86,9 @@ public class HuffmanEncode {
 
     public static void writeCodeInEncodedFile(byte[] byteCodeArray, String encodedFilePath) throws IOException {
 
-        try (FileOutputStream fos = new FileOutputStream(encodedFilePath)) {
+        String newFilePath = encodedFilePath.substring(0, encodedFilePath.lastIndexOf(".")) + ".huff";
+        File file = new File(newFilePath);
+        try (FileOutputStream fos = new FileOutputStream(file)) {
             fos.write(byteCodeArray);
         } catch (IOException e) {
             e.printStackTrace();
